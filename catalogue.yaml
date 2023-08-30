@@ -70,8 +70,11 @@
       state: installed
 
   - name: Loading catalogue date into mongodb Schema
-    ansible.builtin.command: mongo --host mongodb.devopsaws.site < /app/schema/catalogue.js
-    # ansible.builtin.shell:  mongo --host mongodb.devopsaws.site < /app/schema/catalogue.js
+    # ansible.builtin.command: mongo --host mongodb.devopsaws.site < /app/schema/catalogue.js
+    ansible.builtin.shell:  'mongo --host mongodb.devopsaws.site < /app/schema/catalogue.js'
+
+  # - name: load catalogue data
+  #   ansible.builtin.command: mongo --host mongodb.devopsaws.site < /app/schema/catalogue.js
 
   - name: restart catalogue
     ansible.builtin.service:
