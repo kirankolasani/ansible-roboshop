@@ -24,5 +24,5 @@
     ansible.builtin.file:
       path: /app
       state: directory
-    when: directory.stat.exists == false
+    when: directory.stat.exists == False
 
