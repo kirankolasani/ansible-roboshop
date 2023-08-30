@@ -13,7 +13,7 @@
     anisible.builtin.service:
       name: mongod
       state: started
-      enable: yes
+      enabled: yes
   - name: editing or replacing ip address in mongo.conf file.
     ansible.builtin.replace:
       path: /etc/mongod.conf
