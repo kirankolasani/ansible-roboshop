@@ -29,17 +29,19 @@
     ansible.builtin.get_url: 
       url:  https://roboshop-builds.s3.amazonaws.com/catalogue.zip
       dest: /tmp/catalogue.zip 
+
   - name: changing working dir
-    ansible.builtin.command:
-    args:
-      chdir: /app 
+    ansible.builtin.command: cd /app
+
   - name: Unarchive a catalogue package that is already on the remote machine
     ansible.builtin.unarchive:
       src: /tmp/catalogue.zip 
       dest: /app
       remote_src: yes
+
   - name: installing dependencies 
     ansible.builtin.command: npm install 
+    
   - name: coping catalogue.service file
     ansible.builtin.copy:
       src: catalogue.service
