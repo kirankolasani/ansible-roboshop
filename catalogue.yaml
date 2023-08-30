@@ -65,5 +65,5 @@
       name: mongodb-org-shell
       state: installed
   - name: Loading catalogue date into mongodb Schema
-    ansible.builtin.command:  mongo --host mongodb:mongodb.devopsaws.site < /app/schema/catalogue.js
+    ansible.builtin.command:  mongo --host mongodb.devopsaws.site < /app/schema/catalogue.js
 
