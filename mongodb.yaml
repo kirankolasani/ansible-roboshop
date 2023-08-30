@@ -1,5 +1,6 @@
 - name: installing mongodb
   hosts: mongodb
+  become: yes
   tasks:
   - name: copying mongo.repo file
     ansible.builtin.copy:
@@ -23,4 +24,4 @@
     ansible.builtin.service:
       name: mongod
       state: restarted
-      
+
