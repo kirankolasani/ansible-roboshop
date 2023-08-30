@@ -6,19 +6,23 @@
     ansible.builtin.yum:
       name: nginx
       state: installed
+
   - name: enable & restart nginx
     ansible.builtin.service:
       name: nginx
       state: started
       enabled: yes
+
   - name: removing all files
-    ansible./builtin.file:
+    ansible.builtin.file:
       path: /usr/share/nginx/html/*
       state: absent
+
   - name: downloading package of web app
     ansible.builtin.get_url:
       url:  https://roboshop-builds.s3.amazonaws.com/web.zip
       dest: /tmp/web.zip
+      
   - name: unzipping package of web app
     ansible.builtin.unarchive:
       src: /tmp/web.zip
