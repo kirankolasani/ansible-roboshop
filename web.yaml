@@ -22,9 +22,19 @@
     ansible.builtin.get_url:
       url:  https://roboshop-builds.s3.amazonaws.com/web.zip
       dest: /tmp/web.zip
-      
+
   - name: unzipping package of web app
     ansible.builtin.unarchive:
       src: /tmp/web.zip
       dest: /usr/share/nginx/html
       remote_src: yes 
+
+  - name: copying or creating Nginx Reverse Proxy Configuration.
+    ansible.builtin.copy:
+      src:  roboshop.conf
+      dest: /etc/nginx/default.d/roboshop.conf 
+
+  - name: Restarting nginx service
+    ansible.builtin.service:
+      name: nginx
+      state: restarted
