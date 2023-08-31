@@ -1,0 +1,55 @@
+- name: Cart is a microservice that is responsible for Cart Service in RobotShop e-commerce portal.
+  hosts: cart
+  become: yes
+  tasks: 
+  - name: Setup NodeJS repos
+    ansible.builtin.shell: 'curl -sL https://rpm.nodesource.com/setup_lts.x | bash'
+
+  - name: Install NodeJS
+    ansible.builtin.yum: 
+      name: nodejs
+      state: installed
+
+  - name: Check application User
+    ansible.builtin.command: id roboshop
+    register: u
+
+  - name: Create app user
+    ansible.builtin.user: 
+      name: roboshop
+    when: u.rc != 0
+
+  - name: Check app 
+    ansible.builtin.stat:
+      path: /app
+    register: d
+
+  - name: Create app dir
+    ansible.builtin.file:
+      path: /app
+    when: d.stat.exists == False
+
+  - name: Download & unarchive packages of cart
+    ansible.builtin.unarchive: 
+      src: https://roboshop-builds.s3.amazonaws.com/cart.zip
+      dest: /app
+      remote_src: yes
+
+  - name: download the dependencies.
+    ansible.builtin.command: mpm install
+    args:
+      chdir: /app
+
+  - name: Setup SystemD Cart Service
+    ansible.builtin.copy: 
+      src: cart.service
+      dest: /etc/systemd/system/cart.service
+
+  - name: Load the service.
+    ansible.builtin.systemd:
+      daemon_reload: true
+
+  - name: Enable & Restart cart service
+    ansible.bvuiltin.service:
+      name: cart
+      state: started
