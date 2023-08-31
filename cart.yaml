@@ -28,6 +28,7 @@
   - name: Create app dir
     ansible.builtin.file:
       path: /app
+      state: directory
     when: d.stat.exists == False
 
   - name: Download & unarchive packages of cart
