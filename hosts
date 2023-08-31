@@ -12,3 +12,6 @@ redis.devopsaws.site
 
 [user]
 user.devopsaws.site
+
+[cart]
+cart.devopsaws.site
