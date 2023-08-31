@@ -13,7 +13,8 @@
   - name: check application User
     ansible.builtin.command: id roboshop
     register: u
-
+    ignore_errors: yes
+    
   - name: Add application User if doesn't exit
     ansible.builtin.user:
       name: roboshop
