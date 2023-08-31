@@ -9,3 +9,6 @@ catalogue.devopsaws.site
 
 [redis]
 redis.devopsaws.site
+
+[user]
+user.devopsaws.site
