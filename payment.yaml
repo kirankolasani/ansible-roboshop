@@ -14,7 +14,7 @@
   - name: check  application User
     ansible.builtin.command: id roboshop
     register: u
-    ingone_errors: yes
+    ignore_errors: yes
 
   - name: Create app user
     ansible.builtin.user:
