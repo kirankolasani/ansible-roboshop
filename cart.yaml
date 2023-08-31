@@ -13,6 +13,7 @@
   - name: Check application User
     ansible.builtin.command: id roboshop
     register: u
+    ignore_erros: yes
 
   - name: Create app user
     ansible.builtin.user: 
@@ -47,7 +48,7 @@
 
   - name: Load the service.
     ansible.builtin.systemd:
-      daemon_reload: true
+      daemon_reload: yes
 
   - name: Enable & Restart cart service
     ansible.builtin.service:
