@@ -35,6 +35,7 @@
     ansible.builtin.unarchive:
       src: https://roboshop-builds.s3.amazonaws.com/user.zip
       dest: /app
+      remote_src: yes
 
   - name: download the dependencies.
     ansible.builtin.command: npm install
