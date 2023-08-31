@@ -1,0 +1,59 @@
+- name: his service is responsible for payments in RoboShop e-commerce app. This service is written on Python 3.6, So need it to run this app.
+  hosts: payment
+  become: yes
+  tasks:
+  - name: Install paython 3.6
+    ansible.builtin.yum:
+      name: '{{item}}'
+      state: installed
+    loop:
+      - python36 
+      - gcc 
+      - python3-devel
+
+  - name: check  application User
+    ansible.builtin.command: id roboshop
+    register: u
+    ingone_errors: yes
+
+  - name: Create app user
+    ansible.builtin.user:
+      name: roboshop
+    when: u.rc != 0
+
+  - name: Check app dir
+    ansible.builtin.stat:
+      path: /app
+    register: d
+
+  - name: Create a app dir
+    ansible.builtin.file:
+      path: /app
+      state: directory
+    when: d.stat.exists == False
+
+  - name: Download and unarchive code
+    ansible.builtin.unarchive:
+      src: https://roboshop-builds.s3.amazonaws.com/payment.zip
+      dest: /app
+      remote_src: yes
+
+  - name: download the dependencies.
+    ansible.builtin.shell: 'pip3.6 install -r requirements.txt'
+    args:
+      chdir: /app
+  
+  - name: Setup SystemD Payment Service
+    ansible.builtin.copy:
+      src: payment.service
+      dest: /etc/systemd/system/payment.service
+
+  - name: Load the service.
+    ansible.builtin.systemd:
+      daemon_reload: true
+
+  - name: Enable & Start payment service
+    ansible.builtin.service:
+      name: payment
+      state: started
+      enabled: yes

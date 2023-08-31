@@ -25,3 +25,6 @@ shipping.devopsaws.site
 [rabbitmq]
 rabbitmq.devopsaws.site
 
+[payment]
+payment.devopsaws.site
+
