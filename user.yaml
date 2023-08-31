@@ -33,7 +33,7 @@
 
   - name: download and Unrachive package user
     ansible.builtin.unarchive:
-      path: https://roboshop-builds.s3.amazonaws.com/user.zip
+      src: https://roboshop-builds.s3.amazonaws.com/user.zip
       dest: /app
 
   - name: download the dependencies.
