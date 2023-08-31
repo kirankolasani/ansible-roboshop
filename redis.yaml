@@ -1,29 +1,30 @@
-- name: Install Redis component
+- name: Redis is used for in-memory data storage(Caching) and allows users to access the data of database over API
   hosts: redis
   become: yes
   tasks:
-  - name: Install redis repo
+  - name: Redis is offering the repo file as a rpm. Lets install it
     ansible.builtin.yum:
       name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
       state: installed
       disable_gpg_check: true
 
-  - name: Enable redis 6.2
+  - name: Enable Redis 6.2 from package streams.
     ansible.builtin.command: yum module enable redis:remi-6.2 -y
 
-  - name: Install redis
+  - name: Install Redis
     ansible.builtin.yum:
       name: redis
       state: installed
-  
-  - name: Allow remote connections to redis
+
+  - name: Update listen address from 127.0.0.1 to 0.0.0.0 in /etc/redis.conf 
     ansible.builtin.replace:
       path: /etc/redis.conf
       regexp: '127.0.0.1'
       replace: '0.0.0.0'
-
-  - name: start and enable redis
+  
+  - name: Start & Enable Redis Service
     ansible.builtin.service:
       name: redis
       state: started
       enabled: yes
+      
