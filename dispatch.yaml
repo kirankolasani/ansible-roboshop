@@ -1,0 +1,59 @@
+- name: Dispatch is the service which dispatches the product after purchase. It is written in GoLang, So wanted to install GoLang.
+  hosts: dispatch
+  become: yes
+  tasks:
+  - name: Install GoLang
+    ansible.builtin.yum:
+      name: golang
+      state: installed
+
+  - name: check  application User
+    ansible.builtin.command: id roboshop
+    register: u
+    ignore_errors: yes
+
+  - name: Create app user
+    ansible.builtin.user:
+      name: roboshop
+    when: u.rc != 0
+
+  - name: Check app dir
+    ansible.builtin.stat:
+      path: /app
+    register: d
+
+  - name: Create a app dir
+    ansible.builtin.file:
+      path: /app
+      state: directory
+    when: d.stat.exists == False
+
+  - name: Download and unarchive code
+    ansible.builtin.unarchive:
+      src: https://roboshop-builds.s3.amazonaws.com/dispatch.zip
+      dest: /app
+      remote_src: yes
+
+  - name: download the dependencies.
+    ansible.builtin.shell: '{{item}}'
+    args:
+      chdir: /app
+    loop:
+      - 'go mod init dispatch'
+      - 'go get'
+      - 'go build'
+
+  - name: Setup SystemD Dispatch Service
+    ansible.builtin.copy:
+      src: dispatch.service
+      dest: /etc/systemd/system/dispatch.service
+
+  - name: Load the service.
+    ansible.builtin.systemd:
+      daemon_reload: true
+
+  - name: Enable & Start dispatch service
+    ansible.builtin.service:
+      name: dispatch
+      state: started
+      enabled: yes

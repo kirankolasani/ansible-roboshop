@@ -28,3 +28,6 @@ rabbitmq.devopsaws.site
 [payment]
 payment.devopsaws.site
 
+[dispatch]
+dispatch.devopsaws.site
+
