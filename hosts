@@ -22,3 +22,6 @@ mysql.devopsaws.site
 [shipping]
 shipping.devopsaws.site
 
+[rabbitmq]
+rabbitmq.devopsaws.site
+
