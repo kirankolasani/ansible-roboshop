@@ -37,8 +37,8 @@
 
   - name: download the dependencies.
     ansible.builtin.command: npm install
-      args:
-        chdir: /app
+    args:
+      chdir: /app
   
   - name: copy user.service file
     ansible.builtin.copy: 
