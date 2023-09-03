@@ -1,0 +1,14 @@
+- name: Creating EC2 Instances or resources 
+  # hosts:
+  amazon.aws.ec2_instance:
+    instance_type:  t2.micro
+    image_id: ami-03265a0778a880afb
+    count: 3
+    region: us-east-2
+    network:
+      assign_public_ip: true
+      security_group: allow-all
+      vpc_subnet_id: subnet-012679d2f37d4f0e3
+    state: present
+    tags:
+      foo: bar 
