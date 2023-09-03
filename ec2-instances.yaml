@@ -1,5 +1,5 @@
 - name: Creating EC2 Instances or resources 
-  # hosts:
+  hosts: localhost
   tasks:
   - name: EC2 instance
     amazon.aws.ec2_instance:
