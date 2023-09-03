@@ -2,11 +2,12 @@
   hosts: localhost
   become: yes
   tasks:
-  - name: python modules
+  - name: python 3.6
     ansible.builtin.yum:
-      name: '{{item}}'
+      name: python36
       state: installed
+  - name: python modules
+    ansible.builtin.shell: '{{item}}'
     loop:
-      - 'python36'
-      - 'boto3==1.22.0'
-      - 'botocore==1.25.0'
+      - 'pip3 install botocore==1.25.0'
+      - 'pip3 install boto3==1.22.0'
