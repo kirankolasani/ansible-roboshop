@@ -7,6 +7,6 @@
       name: '{{item}}'
       state: installed
     loop:
-      - 'python>=3.6'
-      - 'boto3>=1.22.0'
-      - 'botocore>=1.25.0'
+      - 'python36'
+      - 'boto3==1.22.0'
+      - 'botocore==1.25.0'
